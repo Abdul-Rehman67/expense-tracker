@@ -1,12 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
-
+import logo from "./logo.svg";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import CreateAccount from "./pages/CreateAccount";
 function App() {
   return (
-    <div className="">
-      hello
-      
-    </div>
+    <>
+    {/* <Login/> */}
+    <Dashboard/>
+    {/* <CreateAccount/> */}
+  
+    </>
   );
 }
 
