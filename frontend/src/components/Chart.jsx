@@ -24,7 +24,7 @@ const ChartComponent = () => {
         options={data.options}
         series={data.series}
         type="bar"
-        width="400"
+        width="330"
       />
     </div>
   );
