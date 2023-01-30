@@ -38,25 +38,15 @@ export const register = (payload) => async (dispatch) => {
       type: USER_REGISTER_REQUEST,
     });
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    const  data  = await axios.post(SIGN_UP, payload);
+    const data = await axios.post(SIGN_UP, payload);
+    console.log(data)
 
     dispatch({
       type: USER_REGISTER_SUCCESS,
       payload: data,
     });
 
-    dispatch({
-      type: USER_LOGIN_SUCCESS,
-      payload: data,
-    });
-
-    localStorage.setItem("userInfo", JSON.stringify(data));
+  
   } catch (error) {
     dispatch({
       type: USER_REGISTER_FAIL,

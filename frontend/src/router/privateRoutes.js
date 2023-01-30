@@ -1,9 +1,8 @@
 import { Outlet, Navigate } from "react-router-dom";
 
 function PrivateRoute() {
-//   let auth = { token: localStorage.getItem("isAuthenticated") };
-let auth =true
-  return auth ? (
+  let auth = { token: localStorage.getItem("isAuthenticated") };
+  return !auth.token ? (
     <>
      
       <Outlet />
