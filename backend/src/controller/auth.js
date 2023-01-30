@@ -1,11 +1,12 @@
-const { createUser } = require("../services/auth");
-const {response} = require("../dto/send.response");
+const { createUser, login } = require("../services/auth");
+const { response } = require("../dto/send.response");
+const tokenService = require("../services/tokenService");
 
-const createUserController = async  (req, res) => {
+const createUserController = async (req, res) => {
   const payload = req.body;
-  
+
   let create = await createUser(payload);
-  console.log("create",create)
+  console.log("create", create);
   if (create.userExits && create.error) {
     res.send(response(false, "An error occured", {}));
   }
@@ -15,9 +16,22 @@ const createUserController = async  (req, res) => {
     res.send(response(false, "User Already exists", {}));
   }
 };
-const loginController = (req, res) => {
-const payload = req.body
-
-
+const loginController = async (req, res) => {
+  const payload = req.body;
+  console.log(payload);
+  const user = await login(payload);
+  if (!user) {
+    return res.send(response(false, "Incorrect username password", {}));
+  } else {
+    const tokens = await tokenService.generateAuthTokens(user);
+    console.log("tokens",tokens)
+    return res.send(
+      response(true, "found success", { user: user, token: tokens })
+    );
+  }
 };
-module.exports = { createUserController, loginController };
+const test = async (req,res) =>{
+  console.log('hello')
+
+} 
+module.exports = { createUserController, loginController,test };

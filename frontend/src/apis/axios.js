@@ -6,7 +6,8 @@ axios.interceptors.request.use(
   (req) => {
     let headers = {
       ...req.headers,
-      Authorization: `${localStorage.getItem("token")}`,
+    //   authorization: `${localStorage.getItem("token")}`,
+      authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhYmNkZWZAZ21haWwuY29tIiwiaWF0IjoxNjc1MDc1NDM0LCJleHAiOjE2NzUxNjE4MzQsInR5cGUiOiJBQ0NFU1MifQ.fXX8s4Gw0sPDjbbjqLL8eLt4HeJ4tZ_LXbiyAm3zw88',
     };
     if (headers) {
       req.headers = headers;
