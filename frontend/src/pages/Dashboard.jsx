@@ -39,22 +39,22 @@ useEffect(()=>{
       <div class="bg-gray-100 h-[100vh]">
         <div className="flex justify-between">
           <div>
-            <h1 class="text-4xl font-normal leading-normal px-5">
+            <h1 class="md:text-4xl text-xl font-normal leading-normal px-5">
               Expense Tracker
             </h1>
           </div>
-          <div className="flex">
+          <div className="flex gap-1 mt-1 mr-[0.1px] sm:mr-5">
             <button
               type="button"
               onClick={handleTransactionModalOpen}
-              class="inline-block px-6 py-2.5 mr-5 mt-4 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+              class="bg-blue-500 rounded w-full md:text-md text-xs"
             >
-              Create Transaction
+               Create Transaction
             </button>
             <button
               type="button"
               onClick={handleBalanceModalOpen}
-              class="inline-block px-6 py-2.5 mr-5 mt-4 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+              class="bg-blue-500 rounded w-full md:text-md text-xs"
             >
               Edit Balance
             </button>
@@ -63,7 +63,7 @@ useEffect(()=>{
         <div class="flex flex-wrap justify-between ">
           {data.userhaveMoneyIn.map(item=><Cards props={item}/>)}
         </div>
-        <h1 class="text-4xl font-normal leading-normal  mb-2  px-5">
+        <h1 class="md:text-4xl text-xl mt-2 font-normal leading-normal  mb-2  px-5">
           All Transactions
         </h1>
         <div className="flex flex-col px-5  mt-5 md:flex-row gap-1">
