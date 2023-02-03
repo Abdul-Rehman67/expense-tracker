@@ -31,7 +31,7 @@ const loginController = async (req, res) => {
   }
 };
 const test = async (req,res) =>{
-  console.log('hello')
+  console.log(req.email)
 
 } 
 module.exports = { createUserController, loginController,test };

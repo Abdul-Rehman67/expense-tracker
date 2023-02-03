@@ -61,7 +61,7 @@ const EditBalanceModal = ({ openModal, handleClose,data }) => {
         }}
         okText={"Edit"}
       >
-        { data.map(item=>
+        {/* { data.map(item=>
         <>
         <label>{item.name.toUpperCase()}</label>
         <input
@@ -76,7 +76,7 @@ const EditBalanceModal = ({ openModal, handleClose,data }) => {
         </>
       
         )
-}
+} */}
        
       </Modal>
     </>

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const transactionSchema = mongoose.Schema({
-  userId: {
+  userEmail: {
     type: String,
   },
   transactionDetails: {

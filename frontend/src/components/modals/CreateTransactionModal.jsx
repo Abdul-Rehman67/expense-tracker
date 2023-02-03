@@ -4,7 +4,7 @@ import formData from "../../utils/transactionformfields";
 import EditBalanceModal from "./EditBalanceModal";
 const ModalComponent = ({ openModal, handleClose }) => {
   console.log(openModal);
-  const [formData, setFormData] = useState([]);
+  const [formData, setFormData] = useState({});
   const [showCustomCategory, setShowCustomCategory] = useState(false);
   const [currentData, setCurrentData] = useState({});
   const [disabled, setDisabled] = useState(false);

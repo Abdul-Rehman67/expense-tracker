@@ -1,27 +1,25 @@
-import {React,useState} from "react";
+import { React, useState } from "react";
 import Cards from "../components/Cards";
 import Table from "../components/Table";
 import ChartComponent from "../components/Chart";
 import ModalComponent from "../components/modals/CreateTransactionModal";
 import EditBalanceModal from "../components/modals/EditBalanceModal";
+import { getUserData } from "../store/actions/user";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 const Dashboard = () => {
+  const dispatch = useDispatch();
   const [isTransactionModalOpen, setIsTransactionModalOpen] = useState(false);
   const [isBalanceOpen, setIsBalanceOpen] = useState(false);
-  const [data,setData]=useState({
-    userId:'',
-    userhaveMoneyIn:[],
-});
-useEffect(()=>{
-    setData({
-        userId: '',
-        userhaveMoneyIn: [
-            {name:'savings',amount:5000},
-            {name:'account',amount:6000},
-            {name:'cash',amount:5000},
-        ]
-    });
-    },[])
+  const [data, setData] = useState({});
+  const userData = useSelector((state) => state.userDataReducer);
+  console.log(userData);
+  const { loading, userInfo, error } = userData;
+  let dataOfUser = userInfo?.data?.payload.data
+
+ useEffect(() => {
+    dispatch(getUserData());
+  }, []);
   const handleTransactionModalOpen = () => {
     setIsTransactionModalOpen(true);
   };
@@ -30,9 +28,8 @@ useEffect(()=>{
   };
   const handleModalClose = () => {
     setIsTransactionModalOpen(false);
-    setIsBalanceOpen(false)
-  }
-
+    setIsBalanceOpen(false);
+  };
 
   return (
     <>
@@ -49,7 +46,7 @@ useEffect(()=>{
               onClick={handleTransactionModalOpen}
               class="bg-blue-500 rounded w-full md:text-md text-xs"
             >
-               Create Transaction
+              Create Transaction
             </button>
             <button
               type="button"
@@ -61,7 +58,9 @@ useEffect(()=>{
           </div>
         </div>
         <div class="flex flex-wrap justify-between ">
-          {data.userhaveMoneyIn.map(item=><Cards props={item}/>)}
+          {dataOfUser && dataOfUser.userHaveMoneyIn?dataOfUser.userHaveMoneyIn.map((item) => (
+            <Cards props={item} />
+          )):''}
         </div>
         <h1 class="md:text-4xl text-xl mt-2 font-normal leading-normal  mb-2  px-5">
           All Transactions
@@ -76,11 +75,18 @@ useEffect(()=>{
         </div>
 
         <div>
-        <ModalComponent openModal={isTransactionModalOpen} handleClose={handleModalClose}/>
+          <ModalComponent
+            openModal={isTransactionModalOpen}
+            handleClose={handleModalClose}
+          />
         </div>
 
         <div>
-        <EditBalanceModal openModal={isBalanceOpen} handleClose={handleModalClose} data={data.userhaveMoneyIn}/>
+          <EditBalanceModal
+            openModal={isBalanceOpen}
+            handleClose={handleModalClose}
+            data={data.userhaveMoneyIn}
+          />
         </div>
       </div>
     </>

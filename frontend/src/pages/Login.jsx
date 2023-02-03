@@ -1,9 +1,17 @@
 import {React,useState} from "react";
 import { Button, Checkbox, Form, Input } from "antd";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
+import { login } from "../store/actions/auth";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
   const [formData, setFormData] = useState([]);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const loginState = useSelector((state) => state.userLogin);
+  console.log(loginState)
+  let { loading } = loginState;
+  
   const handleSubmit = () => {
     console.log(formData);
     if (
@@ -12,9 +20,23 @@ const Login = () => {
     ) {
       alert("all fields are required");
     } else {
-      //api call using store
+      dispatch(login(formData))
+      .then((response) => {
+        console.log("response", response);
+        if (response.data.success) {
+          navigate("/");
+          localStorage.setItem('isAuthenticated',response.data.payload.token)
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+     
     }
-  };
+  
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -50,7 +72,7 @@ const Login = () => {
               className="w-full text-center py-3 rounded bg-blue-600 text-white hover:bg-blue-500 focus:outline-none my-1"
               onClick={handleSubmit}
             >
-              Login
+             {!loading?' Login':'Please wait...'}
             </button>
             <div className="text-grey-dark mt-6">
               Don't have an account?

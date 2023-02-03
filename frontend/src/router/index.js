@@ -10,8 +10,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import PrivateRoute from "./privateRoutes";
 
 function Navigator() {
-  // const login = useSelector((state) => state.login.loginUser);
-  const login = JSON.parse(localStorage.getItem("isAuthenticated"));
+  const login = localStorage.getItem("isAuthenticated");
 
  
 

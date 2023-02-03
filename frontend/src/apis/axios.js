@@ -4,10 +4,11 @@ import axios from "axios";
 
 axios.interceptors.request.use(
   (req) => {
+    console.log("req.headers",req.headers)
     let headers = {
       ...req.headers,
-    //   authorization: `${localStorage.getItem("token")}`,
-      authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhYmNkZWZAZ21haWwuY29tIiwiaWF0IjoxNjc1MDc1NDM0LCJleHAiOjE2NzUxNjE4MzQsInR5cGUiOiJBQ0NFU1MifQ.fXX8s4Gw0sPDjbbjqLL8eLt4HeJ4tZ_LXbiyAm3zw88',
+      authorization: `${localStorage.getItem("isAuthenticated")}`,
+     
     };
     if (headers) {
       req.headers = headers;
@@ -22,14 +23,17 @@ axios.interceptors.request.use(
 // Add a response interceptor
 axios.interceptors.response.use(
   function (response) {
-    // Any status code that lie within the range of  cause this function to trigger
-    // Do something with response data
+
     return response;
   },
-  function (error) {
-    // Any status codes that falls outside the range  cause this function to trigger
-    // Do something with response error
-    return Promise.reject(error);
+  function (err) {
+    if (err.response.status === 401) {
+      // window.location.href = "/login";
+      // localStorage.removeItem('isAuthenticated')
+      console.log("token not");
+    }
+    return Promise.reject(err);
+    
   }
 );
 

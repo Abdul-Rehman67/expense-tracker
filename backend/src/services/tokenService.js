@@ -18,13 +18,14 @@ const generateToken = (
 };
 const saveToken = async (token, userEmail, expires, type) => {
   console.log("expires====>", token, userEmail, expires, type);
-  const tokenDoc = await Token.create({
+  const tokenDoc = await Token({
     token,
     user: userEmail,
     expires: expires.toDate(),
     type,
-  });
-  console.log(tokenDoc);
+  })
+  tokenDoc.save()
+  console.log("tokenDoc",tokenDoc);
   return tokenDoc;
 };
 const verifyToken = async (token, type) => {
@@ -33,7 +34,7 @@ const verifyToken = async (token, type) => {
   const tokenDoc = await Token.findOne({ token, type, user: payload.sub });
   console.log("tokenDoc", tokenDoc);
   if (!tokenDoc) {
-   return {token:false,message:'not found'}
+    return { token: false, message: "not found" };
   }
   return tokenDoc;
 };
@@ -43,9 +44,16 @@ const generateAuthTokens = async (user) => {
     "days"
   );
   console.log(accessTokenExpires);
-  const  accessToken= generateToken(user.email, accessTokenExpires, "ACCESS");
-
-  await saveToken(accessToken, user.email, accessTokenExpires, "ACCESS");
-  return accessToken
+  const accessToken = generateToken(user.email, accessTokenExpires, "ACCESS");
+  let save = await saveToken(
+    accessToken,
+    user.email,
+    accessTokenExpires,
+    "ACCESS"
+  );
+  if (save) {
+    console.log("save",save)
+    return accessToken;
+  }
 };
 module.exports = { generateAuthTokens };
