@@ -7,6 +7,7 @@ const transaction = require ('./src/routes/transactions')
 const user = require ('./src/routes/user')
 dotenv.config()
 const app = express()
+const User = require('./src/models/User')
 const port = process.env.PORT
 
 app.use(cors());
@@ -16,6 +17,12 @@ app.use(express.json());
 
 app.get('/', (req, res) => {
   res.send('Hello expense tracker!')
+})
+app.get('/users', async(req, res) => {
+  let result =await  User.find()
+  console.log(result)
+  res.send(result)
+  
 })
 
 app.use('/auth',authRoute)

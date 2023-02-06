@@ -1,5 +1,6 @@
 // const domain_prefix = "http://localhost:5000/";
-const domain_prefix = "http://192.168.1.107:5000/";
+// const domain_prefix = "http://192.168.1.107:5000/";
+const domain_prefix = "https://expense-tracker-backend-chi.vercel.app/";
 export const SIGN_UP = domain_prefix + "auth/create-user";
 export const LOG_IN = domain_prefix + "auth/login";
 export const CREATE_TRANSACTION = domain_prefix + "transaction/create-transaction";
