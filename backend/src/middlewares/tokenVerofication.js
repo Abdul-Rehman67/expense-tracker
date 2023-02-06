@@ -13,8 +13,8 @@ const userChecker = async (req, res, next) => {
   try {
     const decoded = jwt.verify(authorizationHeader, process.env.JWT_SECRET);
     const tokenRecord = await Token.find({ user: decoded.sub }).sort({_id:-1}).limit(1)
-    console.log(tokenRecord)
-    console.log(tokenRecord,tokenRecord[tokenRecord.length-1].token !== authorizationHeader )
+    // console.log(tokenRecord)
+    // console.log(tokenRecord,tokenRecord[tokenRecord.length-1].token !== authorizationHeader )
     if (!tokenRecord || tokenRecord[0].token !== authorizationHeader) {
       return res.status(401).send({ error: "invalid token" });
     }

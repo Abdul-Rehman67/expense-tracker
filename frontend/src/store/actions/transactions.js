@@ -1,4 +1,4 @@
-import { CREATE_TRANSACTION, DELETE_TRANSACTION, UPDATE_TRANSACTION } from "../../apis/apiRoutes";
+import { CREATE_TRANSACTION, DELETE_TRANSACTION, GET_ALL_TRANSACTION, UPDATE_TRANSACTION } from "../../apis/apiRoutes";
 import {
   CREATE_TRANSACTION_REQUEST,
   CREATE_TRANSACTION_FAILURE,
@@ -9,7 +9,11 @@ import {
   DELETE_TRANSACTION_SUCCESS,
   UPDATE_TRANSACTION_REQUEST,
   UPDATE_TRANSACTION_SUCCESS,
+  GET_TRANSACTION_REQUEST,
+  GET_TRANSACTION_FAILURE,
+  GET_TRANSACTION_SUCCESS,
 } from "../constants/transaction";
+import axios from '../../apis/axios'
 export const createTransaction = (payload) => async (dispatch) => {
   try {
     dispatch({
@@ -61,6 +65,7 @@ export const deleteTransaction = (payload) => async (dispatch) => {
     dispatch({
       type: DELETE_TRANSACTION_REQUEST,
     });
+    console.log("payload of delete",payload)
 
     const data = await axios.post(DELETE_TRANSACTION, payload);
     console.log(data);
@@ -72,6 +77,29 @@ export const deleteTransaction = (payload) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_TRANSACTION_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+export const getTransaction = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_TRANSACTION_REQUEST,
+    });
+
+    const data = await axios.get(GET_ALL_TRANSACTION);
+    console.log(data);
+
+    dispatch({
+      type: GET_TRANSACTION_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_TRANSACTION_FAILURE,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

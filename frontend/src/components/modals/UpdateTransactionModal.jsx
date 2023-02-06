@@ -1,13 +1,11 @@
 import { Button, Modal } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createTransaction, getTransaction } from "../../store/actions/transactions";
+import { createTransaction,getTransaction, updateTransaction } from "../../store/actions/transactions";
 import { getUserData } from "../../store/actions/user";
-// import { getTransaction } from "../../store/actions/transactions";
 import formData from "../../utils/transactionformfields";
-import EditBalanceModal from "./EditBalanceModal";
-const ModalComponent = ({ openModal, handleClose, data }) => {
-  console.log(data);
+const UpdateModal = ({ openModal, handleClose, data }) => {
+  console.log("data===", data);
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({});
   const [showCustomCategory, setShowCustomCategory] = useState(false);
@@ -16,32 +14,44 @@ const ModalComponent = ({ openModal, handleClose, data }) => {
   const userData = useSelector((state) => state.userDataReducer);
   const { loading, userInfo, error } = userData;
   let dataOfUser = userInfo?.data?.payload.data;
-  const userTransaction = useSelector((state) => state.userTransaction);
-  const loadingT = userTransaction.loading;
+  
 
   const categoryOptions = [
     { name: "Cash", value: "cash" },
     { name: "Savings", value: "savings" },
     { name: "Account", value: "account" },
   ];
-  const typeOptions = [
-    { name: "Cash", value: "cash" },
-    { name: "Savings", value: "savings" },
-    { name: "Account", value: "account" },
-  ];
+  useEffect(() => {
+    console.log("use effcet chhala")
+    if(openModal){
+
+
+        setFormData({
+            
+          amount: data?.transactionDetails[0].amount,
+          email: data?.transactionDetails[0].email,
+          category: data?.transactionDetails[0].category,
+          customCategory: data?.transactionDetails[0].customCategory,
+          description: data?.transactionDetails[0].description          ,
+          type: data?.transactionDetails[0].type,
+        });
+    }
+  }, [openModal]);
+  
 
   const handleOk = () => {
     console.log(formData);
+
     if (
       Object.keys(formData).some(
         (key) =>
           formData[key] === "" ||
-          Object.keys(formData).length < (formData.category === "other" ? 5 : 4)
+          Object.keys(formData).length < (formData.category === "other" ? 6 : 5)
       )
     ) {
       alert("all fields are required");
     } else {
-      const parsedData = {
+      let parsedData = {
         ...formData,
         amount: parseInt(formData.amount, 10),
       };
@@ -54,7 +64,9 @@ const ModalComponent = ({ openModal, handleClose, data }) => {
         alert("insufficient balance");
         return;
       }
-      dispatch(createTransaction(parsedData)).then(()=>{
+      parsedData = { ...parsedData, ["id"]: data._id };
+
+      dispatch(updateTransaction(parsedData)).then(()=>{
         dispatch(getTransaction())
         dispatch(getUserData())
         handleClose()
@@ -82,12 +94,15 @@ const ModalComponent = ({ openModal, handleClose, data }) => {
     }
     if (e.target.name === "customCategory") {
       setShowCustomCategory(true);
-      const lowerCaseValue = e.target.value.toLowerCase();
+      console.log("e.target.value",e.target.value)
+      const lowerCaseValue = e.target.value?.toLowerCase();
       const matchingOption = dataOfUser?.userCategory.find(
         (option) =>
-          option.value.toLowerCase() === lowerCaseValue ||
-          option.name.toLowerCase() === lowerCaseValue
+        console.log(option)
+        // option.value.toLowerCase() === lowerCaseValue ||
+        //   option.name.toLowerCase() === lowerCaseValue
       );
+      console.log("matchingOption",matchingOption)
       if (matchingOption) {
         alert("This category already exists in the dropdown");
         setDisabled(true);
@@ -96,12 +111,19 @@ const ModalComponent = ({ openModal, handleClose, data }) => {
         setDisabled(false);
       }
     }
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
   
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+    
+    // setFormData(updatedValue);
+  };
+//   useEffect(() => {
+//     if()
+//     dispatch(getUserData());
+//   }, [openModal]);
 
   return (
     <>
@@ -114,7 +136,7 @@ const ModalComponent = ({ openModal, handleClose, data }) => {
           style: { color: "#ffff", background: "#1D4ED8" },
           disabled: disabled,
         }}
-        okText={!loadingT ? "Create" : "Please wait..."}
+        okText={!loading?"Create":"Please wait..."}
       >
         <input
           type="text"
@@ -124,23 +146,27 @@ const ModalComponent = ({ openModal, handleClose, data }) => {
           pattern="[0-9]*"
           onChange={handleChange}
           onKeyPress={handleKeyPress}
+          value={formData?.amount}
         />
 
        
         <input
-          type="text area"
+          type="textarea"
           class="block border border-grey-light w-full p-3 rounded mb-4"
           name="description"
           placeholder="Description"
           onChange={handleChange}
+          value={formData?.description}
         />
         <select
           name="type"
           onChange={handleChange}
-          defaultValue={currentData.type}
+          value={formData?.type}
+
+          
           class="block border border-grey-light w-full p-3 rounded mb-4"
         >
-          <option value="">Paid From</option>
+          <option value="">Select Type</option>
           {dataOfUser?.userHaveMoneyIn.map((option) => (
             <option key={option.value} value={option.value}>
               {option.name}
@@ -151,7 +177,8 @@ const ModalComponent = ({ openModal, handleClose, data }) => {
         <select
           name="category"
           onChange={handleChange}
-          defaultValue={currentData.category}
+          value={formData?.category==="other"?formData?.customCategory:formData?.category}
+
           class="block border border-grey-light w-full p-3 rounded mb-4"
         >
           <option value="">Select Category</option>
@@ -177,4 +204,4 @@ const ModalComponent = ({ openModal, handleClose, data }) => {
     </>
   );
 };
-export default ModalComponent;
+export default UpdateModal;

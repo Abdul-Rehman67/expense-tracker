@@ -12,7 +12,8 @@ const Login = () => {
   console.log(loginState)
   let { loading } = loginState;
   
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     console.log(formData);
     if (
       Object.keys(formData).some((key) => formData[key] === "") ||
@@ -49,7 +50,7 @@ const Login = () => {
         <div className="container md:w-5/12 w-full mx-auto flex-1 flex flex-col items-center justify-center px-2">
           <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
             <h1 className="mb-8 text-3xl text-center">Login</h1>
-
+            <form onSubmit={handleSubmit}>
             <input
               type="text"
               className="block border border-grey-light w-full p-3 rounded mb-4"
@@ -74,6 +75,9 @@ const Login = () => {
             >
              {!loading?' Login':'Please wait...'}
             </button>
+            </form>
+
+          
             <div className="text-grey-dark mt-6">
               Don't have an account?
               <Link to={'/signup'}>

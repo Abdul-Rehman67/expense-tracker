@@ -20,8 +20,14 @@ const createUser = async (payload) => {
         { name: "account", amount: 0 },
         { name: "savings", amount: 0 },
       ];
-      payload = { ...payload, userHaveMoneyIn };
-      console.log(payload);
+      let userCategory = [
+        { name: "Groceries", value:"groceries" },
+        { name: "Rent", value: "rent" },
+        { name: "Shopping", value: "shopping" },
+        { name: "Utilities", value: "utilities" },
+      ];
+      payload = { ...payload, userHaveMoneyIn}
+      payload = { ...payload, userCategory}
       let createUser = await userSchema.create(payload);
       if (createUser) {
         return { userExits: false };

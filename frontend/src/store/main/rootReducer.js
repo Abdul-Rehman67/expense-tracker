@@ -1,7 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { userLoginReducer,userRegisterReducer } from '../reducers/auth';
 import { createTransactionReducer, deleteTransactionReducer, getTransactionReducer, updateTransactionReducer } from '../reducers/transaction';
-import { getUserDataReducer } from '../reducers/user';
+import { getUserDataReducer, updateBalanceDataReducer } from '../reducers/user';
 // import user from './userSlice';
 
 const rootReducer = combineReducers({
@@ -11,7 +11,8 @@ const rootReducer = combineReducers({
   updateTransaction:updateTransactionReducer,
   deleteTransaction:deleteTransactionReducer,
   getTransacion:getTransactionReducer,
-  userDataReducer:getUserDataReducer
+  userDataReducer:getUserDataReducer,
+  updateBalanceDataReducer:updateBalanceDataReducer
 });
 
 export default rootReducer;

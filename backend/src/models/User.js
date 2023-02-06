@@ -16,6 +16,10 @@ const userSchema = mongoose.Schema({
     type: [Object],
     of: new mongoose.Schema({}),
   },
+  userCategory: {
+    type: [Object],
+    of: new mongoose.Schema({}),
+  },
 });
 
 const User = mongoose.model("User", userSchema);
