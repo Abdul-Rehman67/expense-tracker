@@ -20,7 +20,9 @@ const createTransactionController = async (req, res) => {
 };
 const getAllTransactionOfUser = async (req, res) => {
   const userEmail = req.email;
-  let transactions = await getTransactionByEmail(userEmail);
+  let payload = req.body
+  console.log(payload)
+  let transactions = await getTransactionByEmail(userEmail,payload);
   // console.log("transactions====>",transactions);
   if (transactions) {
     return res.send(response(true, "found", {transactions:transactions}));

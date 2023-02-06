@@ -5,11 +5,11 @@ const createTransaction = async (payload) => {
   await transaction.createTransaction();
   return transaction;
 };
-const getTransactionByEmail = async (email) => {
+const getTransactionByEmail = async (email,payload) => {
   try {
-    let findTranaction = await TransactionSchema.find({ userEmail: email });
+   let findTransaction = await TransactionSchema.find({ userEmail: email, transactionDate: payload.date });
 
-    return findTranaction;
+    return findTransaction;
   } catch (error) {
     throw error;
   }

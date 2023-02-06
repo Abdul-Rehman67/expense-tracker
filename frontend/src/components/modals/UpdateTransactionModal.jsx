@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createTransaction,getTransaction, updateTransaction } from "../../store/actions/transactions";
 import { getUserData } from "../../store/actions/user";
-import formData from "../../utils/transactionformfields";
+import query from "../../utils/transactionformfields";
 const UpdateModal = ({ openModal, handleClose, data }) => {
   console.log("data===", data);
   const dispatch = useDispatch();
@@ -67,7 +67,7 @@ const UpdateModal = ({ openModal, handleClose, data }) => {
       parsedData = { ...parsedData, ["id"]: data._id };
 
       dispatch(updateTransaction(parsedData)).then(()=>{
-        dispatch(getTransaction())
+        dispatch(getTransaction(query))
         dispatch(getUserData())
         handleClose()
         

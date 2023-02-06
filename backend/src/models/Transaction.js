@@ -64,8 +64,7 @@ transactionSchema.methods.createTransaction = async function () {
 transactionSchema.methods.updateTransactionS = async function (transactionId, newDetails) {
   let transaction = await Transaction.findById(mongoose.Types.ObjectId(transactionId));  
   console.log("update k function ma")
-  console.log(newDetails)
-  console.log(newDetails.type)
+  
   
 
   if (!transaction) {
@@ -83,6 +82,8 @@ transactionSchema.methods.updateTransactionS = async function (transactionId, ne
   let oldAmount = transaction.transactionDetails[0].amount;
   let newType = newDetails.type;
   let newAmount = newDetails.amount;
+  console.log(newDetails)
+  console.log(oldAmount)
 
   let moneyInIndex = userHaveMoneyIn.findIndex(
     (moneyIn) => moneyIn.name === oldType
@@ -107,9 +108,16 @@ transactionSchema.methods.updateTransactionS = async function (transactionId, ne
     userHaveMoneyIn[moneyInIndex].amount -= newAmount;
   }
   if (oldType === newType && newAmount < oldAmount) {
+    console.log("same samller")
+
     userHaveMoneyIn[moneyInIndex].amount += (oldAmount - newAmount);
   } 
+  if (oldType === newType && newAmount > oldAmount) {
+    console.log("same gretaer")
+    userHaveMoneyIn[moneyInIndex].amount -= (newAmount - oldAmount);
+    }
   else {
+    console.log("differe")
     userHaveMoneyIn[moneyInIndex].amount += (newAmount - oldAmount);
   }
 

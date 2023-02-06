@@ -42,9 +42,11 @@ const ChartComponent = () => {
     });
     
   }
+  console.log("categories",categories)
   const amounts = Object.values(categories);
 const xaxisCategories = Object.keys(categories);
   useEffect(()=>{
+    console.log("use effect chala chart la")
   if (transactionDetails?.length) {
    
     setData({
@@ -53,13 +55,13 @@ const xaxisCategories = Object.keys(categories);
           id: "basic-bar",
         },
         xaxis: {
-          categories: [...new Set(xaxisCategories)],
+          categories:xaxisCategories.length? [...new Set(xaxisCategories)]:[]
         },
       },
       series: [
         {
           name: "series-1",
-          data: amounts,
+          data: amounts.length?amounts:[],
         },
       ],
     });
@@ -68,13 +70,15 @@ const xaxisCategories = Object.keys(categories);
   
   console.log("categories,amounts", categories, amounts);
   return (
-    <div className="mixed-chart">
-      <Chart
+    <div className="mixed-chart ">
+      {transactionDetails?.length?<Chart
         options={data.options}
         series={data.series}
         type="bar"
         width="330"
-      />
+      />:<span className="flex justify-center items-center  font-bold">
+      No transaction
+    </span>}
     </div>
   );
 };

@@ -7,6 +7,7 @@ import {
 } from "../store/actions/transactions";
 import { getUserData } from "../store/actions/user";
 import UpdateModal from "./modals/UpdateTransactionModal";
+import query from "../utils/transactionformfields";
 
 const Table = () => {
   const [isUpdateTransactionModalOpen, setIsUpdateTransactionModalOpen] =
@@ -19,7 +20,7 @@ const Table = () => {
   };
   const handleDeleteTransaction = (item) => {
     dispatch(deleteTransaction({id:item._id})).then(()=>{
-        dispatch(getTransaction())
+        dispatch(getTransaction(query))
     })
   };
 
@@ -42,12 +43,23 @@ const Table = () => {
 
   console.log("tableData", tableData);
   useEffect(() => {
-    dispatch(getTransaction());
+    let currentDate = new Date();
+    let year = currentDate.getFullYear();
+    let currentMonth = currentDate.getMonth();
+    let query;
+    query = {
+      date: {
+        $gte: new Date(year, currentMonth, 1),
+        $lt: new Date(year, currentMonth + 1, 1),
+      },
+    };
+    dispatch(getTransaction(query))
+
   }, [dispatch]);
 
   return (
     <div className="flex flex-col">
-      <div className="overflow-x-scroll sm:-mx-6 lg:-mx-8">
+      <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
           {tableData?.length > 0 ? (
             <div className="h-[25rem] overflow-y-scroll ">

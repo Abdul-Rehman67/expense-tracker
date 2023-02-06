@@ -84,13 +84,13 @@ export const deleteTransaction = (payload) => async (dispatch) => {
     });
   }
 };
-export const getTransaction = () => async (dispatch) => {
+export const getTransaction = (payload) => async (dispatch) => {
   try {
     dispatch({
       type: GET_TRANSACTION_REQUEST,
     });
 
-    const data = await axios.get(GET_ALL_TRANSACTION);
+    const data = await axios.post(GET_ALL_TRANSACTION,payload);
     console.log(data);
 
     dispatch({

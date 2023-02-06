@@ -17,10 +17,7 @@ const EditBalanceModal = ({ openModal, handleClose,data }) => {
       return updated;
     });
   };
-  // useEffect(()=>{
-  //   dispatch(getUserData())
-
-  // },[openModal,dispatch])
+  
   
   
   const handleOk = () => {
@@ -43,6 +40,7 @@ const EditBalanceModal = ({ openModal, handleClose,data }) => {
           if (response.data.success) {
             alert(response.data.message);
             dispatch(getUserData())
+            handleClose()
 
           } else {
             alert(response.data.message);
@@ -117,7 +115,10 @@ const EditBalanceModal = ({ openModal, handleClose,data }) => {
             name={item.name}
             placeholder={`Enter your ${item.name} amount`}
             onChange={(e) => handleChange(e, index)}
+            onKeyPress={handleKeyPress}
+
             value={formData[index].amount}
+            
           />
         </div>
       ))}

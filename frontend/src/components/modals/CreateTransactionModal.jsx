@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createTransaction, getTransaction } from "../../store/actions/transactions";
 import { getUserData } from "../../store/actions/user";
-// import { getTransaction } from "../../store/actions/transactions";
-import formData from "../../utils/transactionformfields";
-import EditBalanceModal from "./EditBalanceModal";
+import query from "../../utils/transactionformfields";
 const ModalComponent = ({ openModal, handleClose, data }) => {
   console.log(data);
   const dispatch = useDispatch();
@@ -18,6 +16,7 @@ const ModalComponent = ({ openModal, handleClose, data }) => {
   let dataOfUser = userInfo?.data?.payload.data;
   const userTransaction = useSelector((state) => state.userTransaction);
   const loadingT = userTransaction.loading;
+  
 
   const categoryOptions = [
     { name: "Cash", value: "cash" },
@@ -55,7 +54,7 @@ const ModalComponent = ({ openModal, handleClose, data }) => {
         return;
       }
       dispatch(createTransaction(parsedData)).then(()=>{
-        dispatch(getTransaction())
+        dispatch(getTransaction(query))
         dispatch(getUserData())
         handleClose()
         

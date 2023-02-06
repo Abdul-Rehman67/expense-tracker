@@ -5,7 +5,7 @@ const { updateUserBalance } = require("../services/user");
 const getUserController = async (req, res) => {
   const emailId = req.email;
   let data = await getUserByEmail(emailId);
-  console.log(data);
+  // console.log(data);
   if (data) {
     return res.send(response(true, "Data Found", { data: data }));
   } else {
@@ -15,7 +15,7 @@ const getUserController = async (req, res) => {
 const updateBalanceController = async (req, res) => {
   const emailId = req.email;
   const payload = req.body;
-  console.log("payload", payload);
+  // console.log("payload", payload);
   let data = await updateUserBalance(emailId, payload);
   console.log(data);
   if (data) {
