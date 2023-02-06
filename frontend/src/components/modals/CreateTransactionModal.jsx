@@ -150,7 +150,6 @@ const ModalComponent = ({ openModal, handleClose, data }) => {
         <select
           name="category"
           onChange={handleChange}
-          defaultValue={currentData.category}
           class="block border border-grey-light w-full p-3 rounded mb-4"
         >
           <option value="">Select Category</option>
@@ -168,7 +167,6 @@ const ModalComponent = ({ openModal, handleClose, data }) => {
             type="text"
             name="customCategory"
             onChange={handleChange}
-            defaultValue={currentData.category}
             class="block border border-grey-light w-full p-3 rounded mb-4"
           />
         )}

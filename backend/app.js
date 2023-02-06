@@ -5,6 +5,7 @@ const {connectDB} = require('./src/db/config')
 const authRoute = require ('./src/routes/auth')
 const transaction = require ('./src/routes/transactions')
 const user = require ('./src/routes/user')
+
 dotenv.config()
 const app = express()
 const User = require('./src/models/User')
@@ -20,7 +21,7 @@ app.get('/', (req, res) => {
 })
 app.get('/users', async(req, res) => {
   let result =await  User.find()
-  console.log(result)
+  console.log("result",result)
   res.send(result)
   
 })

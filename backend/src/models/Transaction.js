@@ -109,6 +109,11 @@ transactionSchema.methods.updateTransactionS = async function (transactionId, ne
   }
   if (oldType === newType && newAmount < oldAmount) {
     console.log("same samller")
+    console.log(oldAmount,newAmount,(oldAmount-newAmount))
+    console.log(userHaveMoneyIn[moneyInIndex].amount)
+    console.log(userHaveMoneyIn[moneyInIndex].amount += (oldAmount - newAmount))
+
+
 
     userHaveMoneyIn[moneyInIndex].amount += (oldAmount - newAmount);
   } 
@@ -120,6 +125,7 @@ transactionSchema.methods.updateTransactionS = async function (transactionId, ne
     console.log("differe")
     userHaveMoneyIn[moneyInIndex].amount += (newAmount - oldAmount);
   }
+  console.log(userHaveMoneyIn)
 
   let update = await User.findOneAndUpdate(
     { email: transaction.userEmail },
