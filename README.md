@@ -29,3 +29,4 @@ Start the development server by running npm start.
 Open a web browser and navigate to http://localhost:3000 to access the application.
 Conclusion
 This MERN Stack expense tracker application provides an easy and convenient way for a user to manage their assets and transactions. With its user-friendly interface and visual representation of the data, it is a useful tool for anyone looking to keep track of their expenses and spending habits.
+DEMO : https://expense-tracker-frontend-beta.vercel.app/
